@@ -1,0 +1,23 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos de entorno
+.env
+config.json
+jsconfig.json
+
+# Archivos específicos del sistema
+.DS_Store
+Thumbs.db
+$RECYCLE.BIN
+System Volume Information
+
+# Archivos de configuración del IDE
+.vscode/
+.idea/
+
