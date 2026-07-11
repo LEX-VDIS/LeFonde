@@ -8,5 +8,5 @@ let conexion = mysql.createConnection({
 
 conexion.connect(function(err) {
   if (err) throw err;
-  console.log("Se ha conectado a la perra puta zorra base de datos MySQL!");
+  console.log("Se ha conectado a la perra puta zorra base de datos D SQLOT!");
 });
