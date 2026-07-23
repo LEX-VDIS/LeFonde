@@ -5,7 +5,7 @@ CREATE DATABASE lefonde;
 -- TABLA USUARIOS
 CREATE TABLE
     lefonde.usuarios (
-        idusuario INT NOT NULL,
+        idusuario INT NOT NULL AUTO_INCREMENT
         nivel INT NOT NULL,
         nombre VARCHAR(45) NOT NULL,
         apellido VARCHAR(45) NULL,
@@ -18,7 +18,7 @@ CREATE TABLE
 -- TABLA MESA
 CREATE TABLE
     lefonde.mesa (
-        idmesa INT NOT NULL,
+        idmesa INT NOT NULL AUTO_INCREMENT
         numero INT NOT NULL,
         estado BOOLEAN NOT NULL,
         PRIMARY KEY (idmesa)
@@ -28,7 +28,7 @@ CREATE TABLE
 -- TABLA PRODUCTOS
 CREATE TABLE
     lefonde.productos (
-        idproducto INT NOT NULL,
+        idproducto INT NOT NULL AUTO_INCREMENT
         nombre VARCHAR(45) NOT NULL,
         precio DECIMAL(10, 2) NOT NULL,
         descripcion varchar(100) NULL,
@@ -40,7 +40,7 @@ CREATE TABLE
 -- TABLA ORDENES
 CREATE TABLE
     lefonde.ordenes (
-        idorden INT NOT NULL,
+        idorden INT NOT NULL AUTO_INCREMENT
         idmesa INT NOT NULL,
         idusuario INT NOT NULL,
         fecha TIMESTAMP NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE
 -- TABLA DETALLE DE ORDENES
 CREATE TABLE
     lefonde.detalle (
-        iddetalle INT NOT NULL,
+        iddetalle INT NOT NULL AUTO_INCREMENT
         idorden INT NOT NULL,
         idproducto INT NOT NULL,
         cantidad INT NOT NULL,
@@ -69,10 +69,10 @@ CREATE TABLE
     );
 -- TABLA DETALLES DE ORDENES
 
---TABLA PAGOS
+-- TABLA PAGOS
 CREATE TABLE
     lefonde.pagos (
-        idpago INT NOT NULL,
+        idpago INT NOT NULL AUTO_INCREMENT
         idorden INT NOT NULL,
         fecha TIMESTAMP NOT NULL,
         hora TIME NOT NULL,
