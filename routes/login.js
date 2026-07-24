@@ -1,26 +1,34 @@
 import { Router } from "express";
 import { conexionMySQL } from "../db/connection.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
 let LeUser = "";
 let LePass = "";
+let LeData = "";
 
-const getPass = async (req, res) => {
-  LeUser = req.query.user;
+const login = async (req, res) => {
+  const { user, pass } = req.body;
+
   try {
     const [results] = await conexionMySQL.query(
-      "SELECT contrasena FROM lefonde.usuarios WHERE usuario LIKE ?",
-      [LeUser],
+      "SELECT * FROM lefonde.usuarios WHERE usuario LIKE ? AND contrasena LIKE ?",
+      [user, pass],
     );
-    LePass = results[0].contrasena;
+
+    if (results.length === 0) {
+      res.send({ mensaje: "Usuario o contraseña incorrectos" });
+    } else {
+      const token = jwt.sign({ user }, "Stack", { expiresIn: "1m" });
+      res.send({ token });
+      console.log(results);
+    }
   } catch (error) {
-    console.log(error);
+    res.send({ mensaje: "usuario no encontrado" });
   }
-  await res.json(LePass);
-  await conexionMySQL.end();
 };
 
-router.get("/login", getPass);
+router.post("/login", login);
 
 export default router;

@@ -8,14 +8,19 @@ import lefonde_routes from "./routes/routes.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+//app.use(cors({ origin: ["http://localhost:4444"], methods: ["GET", "POST"] }));
 app.use(cors());
-app.set("appName", "LeFonde");
-app.set("port", 8888);
-app.set("views", __dirname);
-app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use(lefonde_routes);
 app.use("/", express.static("/inicio"));
+
+app.set("appName", "LeFonde");
+app.set("port", 55555);
+app.set("views", __dirname);
+app.set("view engine", "ejs");
+
 app.listen(app.get("port"));
 
 console.log("Ruta > " + __dirname);
