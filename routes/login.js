@@ -12,20 +12,20 @@ const login = async (req, res) => {
   const { user, pass } = req.body;
 
   try {
-    const [results] = await conexionMySQL.query(
+    const [usuario] = await conexionMySQL.query(
       "SELECT * FROM lefonde.usuarios WHERE usuario LIKE ? AND contrasena LIKE ?",
       [user, pass],
     );
 
-    if (results.length === 0) {
+    if (usuario.length === 0) {
       res.send({ mensaje: "Usuario o contraseña incorrectos" });
     } else {
-      const token = jwt.sign({ user }, "Stack", { expiresIn: "1m" });
+      const token = jwt.sign({ usuario }, "Stack", { expiresIn: "1d" });
       res.send({ token });
-      console.log(results);
+      console.log(usuario);
     }
   } catch (error) {
-    res.send({ mensaje: "usuario no encontrado" });
+    res.send({ mensaje: "Usuario no encontrado" });
   }
 };
 
