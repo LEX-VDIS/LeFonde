@@ -5,19 +5,19 @@ const router = Router();
 
 const mesas = async (req, res) => {
   try {
-    const [cant_mesas] = await conexionMySQL.query(
-      "SELECT COUNT(*) FROM lefonde.mesa",
+    const [mesas] = await conexionMySQL.query(
+      "SELECT * FROM lefonde.mesa",
     );
 
-    if (cant_mesas.length === 0) {
+    if (mesas.length === 0) {
       res.send({ mensaje: "no hay datos" });
     } else {
-      res.send({ cant_mesas });
-      console.log(cant_mesas);
+      res.send({ mesas });
+      console.log(mesas);
     }
 
   } catch (error) {
-    res.send({ mensaje: "Usuario no encontrado" });
+    res.send({ mensaje: "error al ejecutar consulta" });
   }
 };
 
