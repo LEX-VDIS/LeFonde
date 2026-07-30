@@ -4,9 +4,11 @@ import { conexionMySQL } from "../db/connection.js";
 const router = Router();
 
 const mesas = async (req, res) => {
+  const { disponible } = req.body;
   try {
     const [mesas] = await conexionMySQL.query(
-      "SELECT * FROM lefonde.mesa",
+      "SELECT * FROM lefonde.mesas WHERE disponible = ?",
+      [disponible],
     );
 
     if (mesas.length === 0) {
@@ -15,9 +17,8 @@ const mesas = async (req, res) => {
       res.send({ mesas });
       console.log(mesas);
     }
-
   } catch (error) {
-    res.send({ mensaje: "error al ejecutar consulta" });
+    res.send(error);
   }
 };
 
