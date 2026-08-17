@@ -22,4 +22,22 @@ const mesas = async (req, res) => {
 
 router.post("/mesas", mesas);
 
+const mesasDisponibles = async (req, res) => {
+  try {
+    const [mesas] = await conexionMySQL.query(
+      "SELECT * FROM lefonde.mesas WHERE disponible = 1;",
+    );
+    if (mesas.length === 0) {
+      res.send({ mensaje: "no hay datos" });
+    } else {
+      res.send({ mesas });
+      console.log({ mesas });
+    }
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+router.get("/mesas", mesasDisponibles);
+
 export default router;
