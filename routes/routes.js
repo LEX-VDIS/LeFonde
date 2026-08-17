@@ -1,14 +1,16 @@
 import { Router } from "express";
-import login_route from "./login.js";
-import mesas_route from "./mesas.js";
-import produ_route from "./productos.js";
-import orden_route from "./orden.js";
+import login from "./login.js";
+import mesas from "./mesas.js";
+import productos from "./productos.js";
+import orden from "./orden.js";
+import ordenes from "./ordenes.js";
 
 const router = Router();
 
-router.use(login_route);
-router.use(mesas_route);
-router.use(produ_route);
-router.use(orden_route);
+router.use(login);
+router.use(mesas);
+router.use(productos);
+router.use(orden);
+router.use(ordenes);
 
 export default router;
