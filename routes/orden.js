@@ -10,8 +10,8 @@ const nuevaOrden = async (req, res) => {
   const { servicio, mesa } = req.body.data;
   try {
     const [ordenes] = await conexionMySQL.query(
-      "INSERT INTO `lefonde`.`ordenes` (`servicio`, `idmesa`, `idusuario`) VALUES (?, ?, ?);",
-      [servicio, mesa, 1],
+      "INSERT INTO `lefonde`.`ordenes` (`servicio`, `idmesa`, `idusuario`) VALUES (?, ?, ?); UPDATE `lefonde`.`mesas` SET `disponible` = '0' WHERE (`idmesa` = ?);",
+      [servicio, mesa, 1, mesa],
     );
     if (ordenes.affectedRows === 0) {
       res.send({ mensaje: "no se pudo crear la orden" });
