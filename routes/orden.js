@@ -6,7 +6,7 @@ const router = Router();
 export default router;
 
 const nuevaOrden = async (req, res) => {
-  console.log(req.body.productos);
+  //console.log(req.body.productos);
   const { servicio, mesa } = req.body.data;
   try {
     const [ordenes] = await conexionMySQL.query(
@@ -17,15 +17,25 @@ const nuevaOrden = async (req, res) => {
       res.send({ mensaje: "no se pudo crear la orden" });
     } else {
       res.send({ ordenes });
-      console.log({ ordenes });
-      const [ultimaorden] = await conexionMySQL.query("SELECT * FROM lefonde.ordenes WHERE idorden = ?;", [ordenes.insertId]);
-      console.log(ultimaorden[0].idorden);
+      //console.log({ ordenes });
+      //console.log("ordenes.insertId: ", ordenes[0].insertId);
+      const [ultimaorden] = await conexionMySQL.query(
+        "SELECT * FROM lefonde.ordenes WHERE idorden = ?;",
+        [ordenes[0].insertId],
+      );
+      //console.log("ultimaorden", ultimaorden);
       req.body.productos.forEach(async (producto) => {
         const [detalle] = await conexionMySQL.query(
           "INSERT INTO `lefonde`.`detalle` (`idorden`, `idproducto`, `cantidad`, `precio`, `subtotal`) VALUES (?, ?, ?, ?, ?);",
-          [ultimaorden[0].idorden, producto.id, producto.quantity, producto.precio, producto.quantity * producto.precio],
+          [
+            ultimaorden[0].idorden,
+            producto.id,
+            producto.quantity,
+            producto.precio,
+            producto.quantity * producto.precio,
+          ],
         );
-        console.log(detalle);
+        //console.log(detalle);
       });
     }
   } catch (error) {
