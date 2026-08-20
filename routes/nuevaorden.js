@@ -6,11 +6,12 @@ const router = Router();
 export default router;
 
 const nuevaOrden = async (req, res) => {
-  const { servicio, mesa } = req.body.data;
+  const { servicio, mesa, cantidad, total } = req.body.data;
+console.log("req.body.data: ", req.body.data);
   try {
     const [ordenes] = await conexionMySQL.query(
-      "INSERT INTO `lefonde`.`ordenes` (`servicio`, `idmesa`, `idusuario`) VALUES (?, ?, ?); UPDATE `lefonde`.`mesas` SET `disponible` = '0' WHERE (`idmesa` = ?);",
-      [servicio, mesa, req.body.usuario, mesa],
+      "INSERT INTO `lefonde`.`ordenes` (`servicio`, `idmesa`, `idusuario`, `prod_totales`, `total`) VALUES (?, ?, ?, ?, ?); UPDATE `lefonde`.`mesas` SET `disponible` = '0' WHERE (`idmesa` = ?);",
+      [servicio, mesa, req.body.usuario, cantidad, total, mesa],
     );
     if (ordenes.affectedRows === 0) {
       res.send({ mensaje: "no se pudo crear la orden" });
