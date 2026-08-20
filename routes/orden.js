@@ -5,42 +5,22 @@ const router = Router();
 
 export default router;
 
-const nuevaOrden = async (req, res) => {
-  //console.log(req.body.productos);
-  const { servicio, mesa } = req.body.data;
+const orden = async (req, res) => {
+  const { idorden } = req.body;
   try {
-    const [ordenes] = await conexionMySQL.query(
-      "INSERT INTO `lefonde`.`ordenes` (`servicio`, `idmesa`, `idusuario`) VALUES (?, ?, ?); UPDATE `lefonde`.`mesas` SET `disponible` = '0' WHERE (`idmesa` = ?);",
-      [servicio, mesa, 1, mesa],
+    const [orden] = await conexionMySQL.query(
+      "SELECT * FROM `lefonde`.`ordenes` WHERE `idorden` = ?; SELECT * FROM `lefonde`.`detalle` WHERE `idorden` = ? AND `servido` = 0; SELECT * FROM `lefonde`.`detalle` WHERE `idorden` = ? AND `servido` = 1; ",
+      [idorden, idorden, idorden],
     );
-    if (ordenes.affectedRows === 0) {
-      res.send({ mensaje: "no se pudo crear la orden" });
+    if (orden.length === 0) {
+      res.send({ mensaje: "no se encontro la orden" });
     } else {
-      res.send({ ordenes });
-      //console.log({ ordenes });
-      //console.log("ordenes.insertId: ", ordenes[0].insertId);
-      const [ultimaorden] = await conexionMySQL.query(
-        "SELECT * FROM lefonde.ordenes WHERE idorden = ?;",
-        [ordenes[0].insertId],
-      );
-      //console.log("ultimaorden", ultimaorden);
-      req.body.productos.forEach(async (producto) => {
-        const [detalle] = await conexionMySQL.query(
-          "INSERT INTO `lefonde`.`detalle` (`idorden`, `idproducto`, `cantidad`, `precio`, `subtotal`) VALUES (?, ?, ?, ?, ?);",
-          [
-            ultimaorden[0].idorden,
-            producto.id,
-            producto.quantity,
-            producto.precio,
-            producto.quantity * producto.precio,
-          ],
-        );
-        //console.log(detalle);
-      });
+      res.send({ orden });
+      console.log({ orden });
     }
   } catch (error) {
     res.send(error);
   }
 };
 
-router.post("/orden", nuevaOrden);
+router.post("/orden", orden);
