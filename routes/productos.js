@@ -20,10 +20,12 @@ const getProductos = async (req, res) => {
   }
 };
 
-const productos = async (req, res) => {
+const postProductos = async (req, res) => {
   try {
+    const { categoria } = req.body;
     const [productos] = await conexionMySQL.query(
-      "SELECT * FROM lefonde.productos WHERE categoria = 1; SELECT * FROM lefonde.productos WHERE categoria = 2; SELECT * FROM lefonde.productos WHERE categoria = 3; SELECT * FROM lefonde.productos WHERE categoria = 4",
+      "SELECT * FROM lefonde.productos WHERE categoria = ?",
+      [categoria]
     );
 
     if (productos.length === 0) {
@@ -38,6 +40,6 @@ const productos = async (req, res) => {
 };
 
 router.get("/productos", getProductos);
-router.post("/productos", productos);
+router.post("/productos", postProductos);
 
 export default router;
