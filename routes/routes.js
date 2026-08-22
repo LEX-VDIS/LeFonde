@@ -6,6 +6,7 @@ import ordenes from "./ordenes.js";
 import nuevaorden from "./nuevaorden.js";   
 import orden from "./orden.js";
 import servir from "./servir.js";
+import servicio from "./servicio.js";
 
 const router = Router();
 
@@ -14,6 +15,7 @@ router.use(ordenes);
 router.use(nuevaorden);
 router.use(orden);
 router.use(servir);
+router.use(servicio);
 router.use(mesas);
 router.use(productos);
 
