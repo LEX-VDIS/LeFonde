@@ -6,7 +6,7 @@ const router = Router();
 const mesas = async (req, res) => {
   try {
     const [mesas] = await conexionMySQL.query(
-      "SELECT * FROM lefonde.mesas WHERE disponible = 1 AND idmesa > 0; SELECT * FROM lefonde.mesas WHERE disponible = 0 AND idmesa > 0;",
+      "SELECT * FROM lefonde.mesas WHERE disponible = 1 AND idmesa > 0; SELECT * FROM lefonde.mesas WHERE disponible = 0 AND idmesa > 0; SELECT * FROM lefonde.ordenes WHERE idmesa > 0;"
     );
 
     if (mesas.length === 0) {
