@@ -20,11 +20,10 @@ const io = new SocketServer(server, {
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
   socket.on("mensaje", (data) => {
-    console.log("Mensaje:", data);   
+    console.log("Mensaje:", data);
     socket.broadcast.emit("mensaje", data);
   });
 });
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,6 +42,4 @@ server.listen(app.get("port"));
 
 console.log("Ruta > " + __dirname);
 console.log("LeFonde API (v0.1.1)");
-console.log(
-  `Servidor ${app.get("appName")} en el puerto ${app.get("port")}`,
-);
+console.log(`Servidor ${app.get("appName")} en el puerto ${app.get("port")}`);
