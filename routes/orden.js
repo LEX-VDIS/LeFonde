@@ -23,4 +23,23 @@ const orden = async (req, res) => {
   }
 };
 
+const finalizar = async (req, res) => {
+  const { idorden, mesa } = req.body;
+  try {
+    const [orden] = await conexionMySQL.query(
+      "UPDATE `lefonde`.`ordenes` SET `finalizado` = 1 WHERE `idorden` = ?; UPDATE `lefonde`.`mesas` SET `disponible` = 1 WHERE `idmesa` = ?;",
+      [idorden, mesa],
+    );
+    if (orden.affectedRows === 0) {
+      res.send({ mensaje: "no se encontro la orden" });
+    } else {
+      res.send({ orden });
+      console.log({ orden });
+    }
+  } catch (error) {
+    res.send(error);
+  }
+};
+
 router.post("/orden", orden);
+router.put("/orden", finalizar);
