@@ -9,7 +9,7 @@ const orden = async (req, res) => {
   const { idorden } = req.body;
   try {
     const [orden] = await conexionMySQL.query(
-      "SELECT * FROM `lefonde`.`ordenes` WHERE `idorden` = ?; SELECT * FROM `lefonde`.`detalle` WHERE `idorden` = ? AND `servido` = 0; SELECT * FROM `lefonde`.`detalle` WHERE `idorden` = ? AND `servido` = 1; ",
+      "SELECT * FROM `lefonde`.`ordenes` WHERE `idorden` = ?; SELECT * FROM `lefonde`.`detalle` WHERE `idorden` = ? AND `cantidad` > 0; SELECT * FROM `lefonde`.`detalle` WHERE `idorden` = ? AND `servido` > 0; ",
       [idorden, idorden, idorden],
     );
     if (orden.length === 0) {
