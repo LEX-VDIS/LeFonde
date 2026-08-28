@@ -6,7 +6,7 @@ const router = Router();
 const administracion = async (req, res) => {
   try {
     const [conteos] = await conexionMySQL.query(
-      "SELECT COUNT(*) AS TOTAL FROM lefonde.ordenes WHERE ordenes.finalizado = 1; SELECT SUM(total) FROM lefonde.ordenes WHERE ordenes.finalizado = 1; SELECT * FROM lefonde.usuarios WHERE administrador = 1; SELECT * FROM lefonde.usuarios WHERE administrador = 0;",
+      "SELECT COUNT(*) AS total FROM lefonde.ordenes WHERE ordenes.finalizado = 1; SELECT SUM(total) AS total FROM lefonde.ordenes WHERE ordenes.finalizado = 1; SELECT COUNT(*) AS total FROM lefonde.usuarios WHERE administrador = 1; SELECT COUNT(*) AS total FROM lefonde.usuarios WHERE administrador = 0;",
     );
 
     if (conteos.length === 0) {
